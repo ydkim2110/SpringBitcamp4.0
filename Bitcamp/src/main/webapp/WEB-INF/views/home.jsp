@@ -10,7 +10,7 @@
 	<script src="<%=request.getContextPath()%>/resources/js/app.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/css/style.css"></script>
 </head>
-<body style="background-color: #f9f9f9;">
+<body style="background-color: #ebebeb;">
 <div id="wrapper">
 	Hello world!
 </div>

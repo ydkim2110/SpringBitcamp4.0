@@ -122,10 +122,10 @@ var createTab=(x, y, json, type)=>{
 	var a = 1;
 	var tab = '<table id="'+x+'" class="table table-'+y+'">'
 		+'<tr><th style="width: 50%">목록</th>'
-		+'<th style="width: 50%; background-color: green;">결과</th></tr>';
+		+'<th style="width: 50%;"><a id="a-th"></a></th></tr>';
 	$.each(json, (i, j)=> {
 		tab += '<tr>'
-			+'<td>'+(a++)+'. '+j+'</td>'
+			+'<td><a id="a-td'+i+'" href="#">'+(a++)+'. '+j+'</a></td>'
 			+'<td id="'+i+'"></td>'
 	});
 	tab += '</tr></table>'
