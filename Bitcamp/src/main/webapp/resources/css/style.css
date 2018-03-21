@@ -1,0 +1,13 @@
+@charset "UTF-8";
+.tab-algo-fiveByFive {
+	width: 100%; border: 1px solid black; margin: 0 auto;
+}
+.tab-algo-fiveByFive tr {
+	border: 1px solid black; margin: 0 auto;
+}
+.tab-algo-fiveByFive tr th {
+	text-align: center;
+}
+.tab-algo-fiveByFive tbody tr td {
+	border: 1px solid black; margin: 0 auto;
+}
