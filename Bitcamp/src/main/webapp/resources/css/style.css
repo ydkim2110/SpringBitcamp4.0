@@ -11,3 +11,11 @@
 .tab-algo-fiveByFive tbody tr td {
 	border: 1px solid black; margin: 0 auto;
 }
+.popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width: auto;
+	max-width: 500px;
+	margin: 20px auto;
+}
