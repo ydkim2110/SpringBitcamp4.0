@@ -292,7 +292,7 @@ app.algorithm=(()=>{
     			$(createATag({id : 'cancel-btn', link : '#', clazz : 'btn btn-danger', val : '취소'}))
 	    			.appendTo('#div-btn-group')
     			$(createATag({id : 'fileUplod-btn', link : '#', clazz : 'btn btn-primary', val : '파일업로드'}))
-	    			.appendTo('#div-btn-group')
+	    			.appendTo('#div-btn-group');
 
 	    		/*$.magnificPopup.open(
 	    				{items: {src: $(createDiv({id : 'div-write', clazz : 'container popup'}))
