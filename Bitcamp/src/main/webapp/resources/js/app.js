@@ -282,12 +282,22 @@ app.algorithm=(()=>{
 	    		app.board.onCreate();
 	    		$('#span-board').remove();
 	    		$(createSpan({id : 'span-board', clazz : 'glyphicon-bullhorn', val : 'Write'})).appendTo('#a-board');
-	    		$('#a-board').on('click', e=>{
-	    			e.preventDefault();
-	    			$.magnificPopup.open(
-    					{items: {src: $(createDiv({id : 'div-write', clazz : 'container popup'}))
-    						.append(boardWriteView())}, type : 'inline'}, 0);
-	    		});
+	    	$('#span-board').on('click', e=>{
+	    		e.preventDefault();
+	    		$content.html($(createDiv({id : 'div-write', clazz : 'container'}))
+    				.attr('style', 'background-color: white; margin-top: 50px; margin-bottom: 40px; padding: 20px 100px')
+					.append(boardWriteView()));
+	    		$(createATag({id : 'submit-btn', link : '#', clazz : 'btn btn-success', val : '전송'}))
+	    			.appendTo('#div-btn-group')
+    			$(createATag({id : 'cancel-btn', link : '#', clazz : 'btn btn-danger', val : '취소'}))
+	    			.appendTo('#div-btn-group')
+    			$(createATag({id : 'fileUplod-btn', link : '#', clazz : 'btn btn-primary', val : '파일업로드'}))
+	    			.appendTo('#div-btn-group')
+
+	    		/*$.magnificPopup.open(
+	    				{items: {src: $(createDiv({id : 'div-write', clazz : 'container popup'}))
+	    					.append(boardWriteView())}, type : 'inline'}, 0);*/
+	    	});
 	    	});
 	    	
 	    	$(createATag({id : 'a-login', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-user', val : '로그인' })}))
