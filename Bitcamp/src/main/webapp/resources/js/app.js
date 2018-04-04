@@ -10,6 +10,20 @@ app = {init : x=>{
 		    	})
 }};
 
+app.rgx = {isNumber : x=>{
+		return typeof x === 'number' && isFinite(x);
+	},
+	passwordChecker : x=> {
+		// 숫자, 영문대소문자, 4부터 10자리 까지
+		var r = /^[0-9a-zA-z{4, 10}$]/;
+		return r.test(x)?"yes":"no";
+	}, adminChecker : x=> {
+		var r = /[0-9]{5}$/;
+		return r.test(x)?"yes":"no";
+	}
+};
+
+
 app.home={move : x=>{
 	$.getScript(x, ()=>{
 		$('#li-home').empty();
@@ -34,15 +48,16 @@ app.board=(x=>{
 		articles(1)
 	};
 	var write =x=>{
+		console.log('write');
 		var view = $.javascript()+'/view.js';
 		var $content = $('#content');
 		$.getScript(view, ()=>{
 			$content.empty();
 			$content.html($(createDiv({id : 'div-board-write', clazz : 'container text-center'}))
 					.attr('style', 'min-height: 450px; margin-top: 50px; margin-bottom: 50px; background-color: white; padding: 50px'));
-					$(boardWriteView()).appendTo('#div-board-write');
-		})
+					$(boardWriteView({id : 'board-writing', clazz : 'form-group'})).appendTo('#div-board-write');
 
+		})
 	};
 	var articles =x=>{
 		$.getJSON(context+'/articles/'+x, d=>{
@@ -55,6 +70,7 @@ app.board=(x=>{
 									.attr('style', 'margin-bottom: 30px'))
 							.append($(createNewTab({id : 'tab-articles', clazz : 'bordered'})))
 						);
+					
 						// Create Search
 						$(createInputText({id : 'myInput', clazz : 'form-control'})).appendTo('#div-search');
 						$(createATag({id : 'a-search', link : '#', clazz : 'btn btn-primary input-group-addon', val : 'Search'}))
@@ -187,10 +203,10 @@ app.member=(()=>{
 				e.preventDefault();
 				var id = $('#id').val();
 				var json = {
-						'pass' : $('#password').val()
+						pass : $('#password').val()
 				}
 				$.ajax({
-					url : context+'/members/'+id+'/login',
+					url : context+'/member/'+id+'/login',
 					method : 'POST',
 					data : JSON.stringify(json),
 					dataType : 'json',
@@ -256,7 +272,6 @@ app.algorithm=(()=>{
 	    image = $.image();
 	    setContentView();
 	};
-	var wirte=()=>{}
 	var setContentView=()=>{
 		$wrapper.empty();
 	    $.getScript(view, ()=>{
@@ -265,40 +280,108 @@ app.algorithm=(()=>{
 	    	$content.html(
 	    		app.main.onCreate()
 	    	);
+
+	    	$(createSelect({id:'select-id',name:'user', op: createOption({op:'member', sel:'selected', val:'회원'})}))
+	    	      .appendTo($('#li-search-option'))
+	    	$(createOption({op:'admin',sel:'',val:'관리자'})).appendTo('#select-id')
+	    	
+	    	
 	    	$(createATag({id : 'a-home', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-home', val : 'HOME'})}))
 	    	.appendTo('#li-home')
 	    	.click(()=>{
 	    		app.main.onCreate();
 	    	});
+	    	
 	    	$(createATag({id : 'a-about', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-book', val : 'About'})}))
 	    	.appendTo('#li-about')
 	    	.click(()=>{
 	    		app.about.onCreate();
 	    	});
+	    	
 	    	$(createATag({id : 'a-board', link : '#', clazz : '', val : createSpan({id : 'span-board', clazz : 'glyphicon-bullhorn', val : 'Board'})}))
 	    	.appendTo('#li-board');
-	    	$('#span-board')
-	    	.click(()=>{
-	    		app.board.onCreate();
-	    		$('#span-board').remove();
-	    		$(createSpan({id : 'span-board', clazz : 'glyphicon-bullhorn', val : 'Write'})).appendTo('#a-board');
-	    	$('#span-board').on('click', e=>{
-	    		e.preventDefault();
-	    		$content.html($(createDiv({id : 'div-write', clazz : 'container'}))
-    				.attr('style', 'background-color: white; margin-top: 50px; margin-bottom: 40px; padding: 20px 100px')
-					.append(boardWriteView()));
-	    		$(createATag({id : 'submit-btn', link : '#', clazz : 'btn btn-success', val : '전송'}))
-	    			.appendTo('#div-btn-group');
-    			$(createATag({id : 'cancel-btn', link : '#', clazz : 'btn btn-danger', val : '취소'}))
-	    			.appendTo('#div-btn-group');
-    			$(createATag({id : 'fileUplod-btn', link : '#', clazz : 'btn btn-primary', val : '파일업로드'}))
-	    			.appendTo('#div-btn-group');
-
-	    		/*$.magnificPopup.open(
-	    				{items: {src: $(createDiv({id : 'div-write', clazz : 'container popup'}))
-	    					.append(boardWriteView())}, type : 'inline'}, 0);*/
-	    	});
-	    	});
+	        $('#span-board')
+	        .click(()=>{
+	        	app.board.onCreate();
+	        	$('#span-board').remove();
+	        	$(createSpan({id : 'span-board', clazz : 'glyphicon-bullhorn', val : 'Write'})).appendTo('#a-board');
+	        	$('#span-board').on('click', e=>{
+	        	e.preventDefault();
+	        	$('#span-board').remove();
+	        	$(createSpan({id : 'span-board', clazz : 'glyphicon-bullhorn', val : 'Board'})).appendTo('#a-board');
+	        	$('#span-board').on('click', e=>{$content.empty(); app.algorithm.onCreate(); app.board.onCreate()});
+	        	// Form Tag로 감싸기
+	        	$content.html($(createDiv({id : 'div-write', clazz : 'container'}))
+	    	            .attr('style', 'background-color: white; margin-top: 50px; margin-bottom: 40px; padding: 20px 100px'))
+	        	$(createForm({id : 'form-write', clazz : '', action : ''})).appendTo('#div-write');
+	            $(boardWriteView({id : 'board-writing', clazz : 'form-group'})).appendTo('#form-write');
+	        	
+			        $(createATag({id : 'submit-btn', link : '#', clazz : 'btn btn-success', val : '전송'}))
+			            .appendTo('#div-btn-group')
+			            .on('click', e=>{
+			            e.preventDefault();
+			            $.ajax({url : context+'/board/post/article', 
+			            	data : JSON.stringify({id : $('#input-name').val(),
+			            		title : $('#input-title').val(),
+			            		content : $('#input-content').val()}),
+			            	dataType : 'json',
+			            	contentType : 'application/json',
+			            	method : 'POST',
+			            	success : d =>{
+			            		alert('글 등록만 성공!!');
+			            	}, error : function(x,s,m){alert(m);}
+			            	});
+			            });
+	        
+			        $(createATag({id : 'cancel-btn', link : '#', clazz : 'btn btn-danger', val : '취소'}))
+			            .appendTo('#div-btn-group')
+			            .on('click', e=>{
+			              e.preventDefault();
+			        });
+			        $(createATag({id : 'fileUplod-btn', link : '#', clazz : 'btn btn-primary', val : '파일업로드'}))
+		            .appendTo('#div-btn-group')
+		            .on('click', e=>{
+			              e.preventDefault();
+			              var magnificPopup = $.magnificPopup.instance;
+			              $.magnificPopup.open(
+			                    {items: {src: 
+			                    	$(createDiv({id : 'div-fileupload', clazz : 'container popup'}))
+			                    	.html($(fileUploadView()))}, type : 'inline'}, 0);
+			              $(createForm({id : 'form-fileupload', clazz : 'form-fileupload', 
+		          			action : context+'/board/file/upload'})).appendTo('#div-fileupload')
+			              $(createInput({id : 'input-file-name', clazz : '', 
+		      				type : 'file', val : '', ph : 'choose a file...'}))
+		      				.attr('style', 'border: 2px solid gray; width: 100%')
+		      				.attr('name', 'files')
+		      				.appendTo('#div-input-fileupload');
+			              $(createInput({id : 'btn btn-cancel', clazz : 'btn-danger', 
+		      				type : 'reset', val : '취소', ph : ''})).appendTo('#btn-group')
+		      				.on('click', e=>{
+		      					e.preventDefault();
+		      					alert('cancel button click!')
+		      					magnificPopup.close();
+		      				});
+		      			  $(createInput({id : 'btn btn-confirm', clazz : 'btn-primary', 
+		      				type : 'submit', val : '저장', ph : ''}))
+		      				.appendTo('#btn-group')
+		      				.on('click', e=>{
+		      				  var formData = new FormData($('#form-fileupload')[0]);
+		                      formData.append('files', $('#input-file-name')[0].files[0]);
+		      						$('#form-fileupload').ajaxForm({
+		      						    url : context+'/board/file/upload',
+		      						    method : 'POST',
+		      						    encType : 'multipart/form-data',
+		      							beforeSubmit : function() {
+		      								alert('로딩화면 !');	
+		      							},
+		      							success : function(data) {
+		      								alert('등록완료 ! ');
+		      							}, error : function(x,s,m){alert(m);}
+		      						}).submit();
+		      				});
+			            });
+		        }); 
+		    });
 	    	
 	    	$(createATag({id : 'a-login', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-user', val : '로그인' })}))
 	    	.appendTo('#li-login')
@@ -306,6 +389,58 @@ app.algorithm=(()=>{
 	    		app.member.onCreate();
 	    	});
 	    	
+	    	$(createATag({id : 'a-admin', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-user', val : '관리자' })}))
+	    	.appendTo('#li-admin')
+	    	.click(()=>{
+	    		$.getScript(view, ()=>{
+	    			if(confirm('직원이 맞습니까?')) {
+	    				var id = prompt('직원ID를 입력하세요.');
+	    				var pass = prompt('직원PASS를 입력하세요.');
+	    				if(app.rgx.adminChecker(id) === 'yes') {
+	    		            $.ajax({
+	    		            	url : context+'/admin/'+id+'/login', 
+	    		            	data : JSON.stringify({pass : pass}),
+	    		            	dataType : 'json',
+	    		            	contentType : 'application/json',
+	    		            	method : 'POST',
+	    		            	success : x =>{
+	    		            		if(x.success == 1){
+	    		            			$content.html($(createDiv({id : 'div-admin', clazz : 'container'}))
+	    		            					.attr('style', 'background-color: white; margin-top: 50px;'
+	    		            							+'margin-bottom: 40px; padding: 20px 100px'));
+	    		            			$(adminView()).appendTo('#div-admin')
+	    		            			$(createButton({id : '', clazz : 'btn-primary', val : '생성'})).appendTo('#td-table')
+	    		            		} else {
+	    		            			alert('돌아가세요');
+	    		            			app.algorithm.onCreate();
+	    		            		}
+	    		            	}, 
+	    		            	error : function(x,s,m){alert(m);}
+    		            	});
+	    				} else {
+	    					alert('잘못입력했습니다.');
+	    				}
+	    			} else {
+	    				alert('직원만 접근 가능');
+	    			}
+	    		});
+	    	});
+	    	
+	    	$(createATag({id : 'a-join', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-user', val : '회원가입' })}))
+	    	.appendTo('#li-join')
+	    	.click(()=>{
+	    		$.getScript(view, ()=>{
+	    			$content.html($(joinView()));
+	    			if(app.rgx($('#input-pass').val()) === 'yes'){
+	    				$.ajax({
+	    					
+	    				});
+	    			}else{
+	    				alert('');
+	    				$('#input-pass').val('').focus();
+	    			};
+	    		});
+	    	});
 	    	$(createATag({id : '', link : '#', clazz : '', val : '수열'}))
 	    	.appendTo('#li-sequence')
 	    	.click(()=>{
@@ -606,7 +741,6 @@ app.algorithm=(()=>{
 					.attr('placeholder','구할 숫자의 범위 입력')
 					.appendTo($right);
 	    			$(createButton({id : 'btn-result', clazz : 'btn-primary', val : '결과 보기'}))
-					.appendTo($right)
 					.attr('style','margin-top:10px;')
 					.on('click', ()=>{
 						var x = $('#rangeNum').val();

@@ -3,6 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitcamp.web.mapper.Mapper">
+	<resultMap type="com.bitcamp.web.domain.Member" id="member">
+		<id property="id" column="id"/>
+		<result property="pass" column="pass" />
+		<result property="name" column="name" />
+		<result property="ssn" column="ssn" />
+		<result property="phoneNumber" column="phoneNumber" />
+		<result property="email" column="email" />
+		<result property="profile" column="profile" />
+		<result property="addr" column="addr" />
+	</resultMap>
+		<resultMap type="com.bitcamp.web.domain.Admin" id="admin">
+		<id property="adminId" column="adminId"/>
+		<result property="adminPass" column="adminPass" />
+	</resultMap>
+	<insert id="addtImage" parameterType="com.bitcamp.web.domain.Command">
+		INSERT INTO Image VALUES(#{imageId}, #{fileName}, #{extension}, now())
+	</insert>
 	<insert id="insertMember" parameterType="com.bitcamp.web.domain.Command">
 		INSERT INTO MEMBER VALUES (#{member.id}, #{member.pass}, #{member.name}, 
 			<choose>
@@ -62,14 +79,33 @@
 			                        from board 
 			                            order by bbsSeq desc
 			               ) A, (SELECT @RNUM :=0) R ) A2
-		where ROWNUM between #{data1} and #{data2};
+		where ROWNUM between #{id} and #{pass};
 	</select>
+	
+	<select id="selectCount" resultType="int" parameterType="com.bitcamp.web.domain.Command">
+		SELECT COUNT(*) FROM ${type}
+	</select>
+	
 	<select id="exist" resultType="int" parameterType="com.bitcamp.web.domain.Command">
-		SELECT COUNT(*) FROM member WHERE id LIKE #{data1} AND pass LIKE #{data2}
+		SELECT COUNT(*) FROM ${type} WHERE ${id} LIKE #{data1} and ${pass} LIKE #{data2}
 	</select>
+	
+<!-- 	<select id="searchMemberById" resultMap="member" parameterType="hasMap">
+		SELECT * FROM ${type} WHERE ${id} LIKE #{data1}
+	</select> -->
+	
+<!-- 	<select id="selectByName" resultMap="member" parameterType="hasMap">
+		SELECT * FROM ${type} WHERE ${id} LIKE #{data1}
+	</select> -->
+	
 	<select id="existArticles" resultType="int" parameterType="com.bitcamp.web.domain.Command">
 		SELECT COUNT(*) FROM board
 	</select>
+	
+	<select id="existAdmin" resultType="int" parameterType="com.bitcamp.web.domain.Command">
+		SELECT COUNT(*) FROM admin WHERE adminId LIKE #{id}
+	</select>
+	
 	<delete id="deleteMember" parameterType="com.bitcamp.web.domain.Command">
 	
 	</delete>

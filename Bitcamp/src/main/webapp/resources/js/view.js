@@ -1,3 +1,157 @@
+var adminView=x=>{
+	return '		<h1>회원관리</h1>'
+	+'		<table class="table table-bordered">'
+	+'			<tr>'
+	+'				<td>'
+	+'					테이블 생성'
+	+'				</td>'
+	+'				<td>'
+	+'					준비중'
+	+'				</td>'
+	+'				<td>'
+	+'					준비중'
+	+'				</td>'
+	+'			</tr>'
+	+'			<tr>'
+	+'				<td>'
+	+'					준비중'
+	+'				</td>'
+	+'				<td>'
+	+'					준비중'
+	+'				</td>'
+	+'				<td id="td-table">테이블 생성'
+	+'						<select  name="table_name" id="create_table">'
+	+'							<option value="member">member</option>'
+	+'							<option value="attend">attend</option> '
+	+'							<option value="bank">bank</option> '
+	+'							<option value="sktelecom">sktelecom</option> '
+	+'						</select> <br />'
+	+'						<input type="hidden" name="cmd" value="create_table" />'
+	+'						<input type="hidden" name="dir" value="admin" />'
+	+'						<input type="hidden" name="page" value="main" />'
+	+'				</td>'
+	+'			</tr>'
+	+'		</table>		';
+}
+
+var joinView=x=>{
+	return '<div class="container" style="margin-top: 50px">'
+	+'<div class="jumbotron">'
+	+'<table class="table">'
+	+'	<tr>'
+	+'		<td>아이디</td>'
+	+'		<td>'
+	+'			<div class="input-group">'
+	+'				<input id="id" class="form-control" name="id" type="text"/>'
+	+'				<span class="input-group-btn">'
+	+'					<button class="btn btn-secondary" type="button">중복확인</button>'
+	+'				</span>'
+	+'			</div>'
+	+'		</td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>비밀번호</td>'
+	+'		<td><input id="pass" class="form-control" type="password" name="pass"/></td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>비밀번호확인</td>'
+	+'		<td><input class="form-control" type="password" name="passconfirm" /></td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>이름</td>'
+	+'		<td><input id="name" class="form-control" type="text" name="name"/></td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>가입일</td>'
+	+'		<td><input class="form-control" type="date" name="date"/></td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>주민번호</td>'
+	+'		<td><input class="form-control" type="text" name="ssn"/></td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>전화번호</td>'
+	+'		<td>'
+	+'			<input type="radio" name="company" value="SKT" checked> SKT'
+	+'			<input type="radio" name="company" value="KT"> KT'
+	+'			<input type="radio" name="company" value="LG"> LG '
+	+'			<select id="combo_box">'
+	+'				<option >010</option>'
+	+'			</select>'
+	+'			<input pattern="[0-9]{4}" type="tel" name="phone" style="height: 25px" />'
+	+'		</td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>이메일</td>'
+	+'		<td>'
+	+'			<div class="input-group">'
+	+'			<input class="form-control" aria-label="Text input with dropdown button" type="email" name="email" />'
+	+'				<div class="input-group-btn">'
+	+'					<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" '
+	+'					aria-haspopup="true" aria-expanded="false">'
+	+'					Email'
+	+'					</button>'
+	+'				        <div class="dropdown-menu dropdown-menu-right">'
+	+'				          <ul>'
+	+'				          <li><a class="dropdown-item" href="#">Action</a></li>'
+	+'				        </ul>'
+	+'				        </div>'
+	+'				</div>'
+	+'			</div>'
+	+'		</td>'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>프로필사진</td>'
+	+'		<td>'
+	+'			<div class="input-group">'
+	+'				<input id="profile" class="form-control" name="profile" type="text"/>'
+	+'				<span class="input-group-btn">'
+	+'					<button class="btn btn-secondary" type="button">업로드</button>'
+	+'				</span>'
+	+'			</div>'
+	+'		</td>'
+	+'		'
+	+'	</tr>'
+	+'	<tr>'
+	+'		<td>주소</td>'
+	+'		<td>'
+	+'			<div class="input-group">'
+	+'				<input id="addr" class="form-control" name="addr" type="text"/>'
+	+'				<span class="input-group-btn">'
+	+'					<button class="btn btn-secondary" type="button">주소검색</button>'
+	+'				</span>'
+	+'			</div>'
+	+'		</td>'
+	+'	</tr>'
+	+'</table>'
+	+'<br />'
+	+'<div class="text-center">'
+	+'	<button id="confirm-btn" class="btn btn-danger"> 확인 </button> &nbsp;&nbsp;&nbsp; '
+	+'	<button id="cancel-btn" class="btn btn-primary"> 취소 </button>'
+	+'</div>'
+	+'</div>'
+	+'</div>';
+}
+
+var fileUploadView=x=>{
+	return '  <div class="row">'
+	+'	  <div class="text-center">'
+	+'		  <h4 style="color: purple; font-size: 40px">File Upload</h4>'
+	+'	  </div>'
+	+'	  <div class="text-center">'
+	+'	  	<span class="glyphicon glyphicon-sort fa-5x" style="font-size:20px;"></span>'
+	+'	  </div><br />'
+	+'  </div>'
+	+'  <div class="row" style="padding-left: 40px; padding-right: 40px">'
+	+'	  <div id="div-input-fileupload" class="form-group">'
+	+'	  </div>'
+	+'  </div>'
+	+'   <div class="row">'
+	+'	  <div id="btn-group" class="btn-group pull-right" style="margin-right: 40px">'
+	+'	  </div>'
+	+'	</div>';
+}
+
 var boardWriteView=x=>{
 	return '<style>'
 	+'    .col-sm-4{'
@@ -8,11 +162,13 @@ var boardWriteView=x=>{
 	+'    }'
 	+'</style>'
 	+'    <h2>글쓰기</h2><br/>'
-	+'    <div class="form-group">'
-	+'        <label for="usr">제목</label>'
-	+'        <input name="brotitle" type="text" class="form-control"><br/>'
+	+'    <div id="'+x.id+'" class="'+x.clazz+'">'
+	+'        <label for="name">작성자</label>'
+	+'        <input id="input-name" type="text" class="form-control"><br/>'
+	+'        <label for="title">제목</label>'
+	+'        <input id="input-title" type="text" class="form-control"><br/>'
 	+'        <label for="comment">내용</label><br />'
-	+'        <textarea name="brocontent" class="form-control" rows="15" >'
+	+'        <textarea id="input-content" class="form-control" rows="15" >'
 	+'        </textarea><br />'
 	+'        <div class="">'
 	+'        </div>'
@@ -194,9 +350,6 @@ var navigation=()=>{
 	+'        width: 100%;'
 	+'    }'
 	+'</style>'
-	+'<div class="jumbotron bg" style="padding-left: 30px;">'
-	+'    <h1 style="color: white;">Welcome to Bitcamp</h1>'
-	+'</div>'
 	+'<div id="navbar" style="z-index: 9">'
 	+'<nav class="navbar navbar-inverse">'
 	+'  <div class="container-fluid">'
@@ -221,15 +374,31 @@ var navigation=()=>{
 	+'            </ul>'
 	+'        </li>'
 	+'      </ul>'
+
 	+'      <ul class="nav navbar-nav navbar-right">'
-	+'            <li id="li-login"></li>'
-	+'            <li class="dropdown mega-dropdown">'
-	+'                <a class="dropdown-toggle" data-toggle="dropdown" role="button"'
-	+'                aria-haspopup="true" aria-expanded="false">'
-	+'                    <span class="glyphicon glyphicon-search"></span>'
-	+'                </a>'
-	+'            </li>'
+	+'        <li class="dropdown mega-dropdown">'
+	+'            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"'
+	+'                aria-haspopup="true" aria-expanded="false">접속하기<span class="caret"></span>'
+	+'            </a>'
+	+'            <ul id="ul-etc" class="dropdown-menu mega-dropdown-menu list-inline">'
+	+'                 <li id="li-login" class="col-sm-2"></li>'
+	+'                 <li id="li-admin" class="col-sm-2"></li>'
+	+'                 <li id="li-join" class="col-sm-2"></li>'
+	+'            </ul>'
+	+'        </li>'	
 	+'      </ul>'
+	
+	+'      <ul class="nav navbar-nav navbar-right">'
+	+'            <li id="li-search-option" class="navbar-left">'
+	+'            </li>'
+	+'      <form class="navar-form navbar-left form-inline" role="search">'
+	+'      	<div class="form-group">'
+	+'      		<input type="text" class="form-control" placeholder="Search...">'
+	+'      		<button type="submit" class="btn btn-default form-control">검색</button>'
+	+'      	</div>'
+	+'      </form>'
+	+'      </ul>'
+	
 	+'    </div>'
 	+'  </div>'
 	+'</nav>'
@@ -243,9 +412,22 @@ function createButtonNav1st() {
 	+'<span class="icon-bar"></span>'
 	+'</button>';
 };
+
+var createSelect=x=>{
+  return '<select id="'+x.id+'" name="'+x.name+'">"'+x.op+'"</select>'
+};
+
+var createOption=x=>{
+  return '<option value="'+x.op+'" " '+x.sel+'">'+x.val+'</option>'
+};
+
+var createForm=x=>{
+	return '<form id="'+x.id+'" class="'+x.clazz+'" action="'+x.action+'" method="post"></form>';
+};
+
 var createFont=x=>{
 	return '<font>'+x.val+'</font>'
-}
+};
 
 var createATag=x=>{
 	return '<a id="'+x.id+'" href="'+x.link+'" class="'+x.clazz+'">'+x.val+'</a>';
@@ -263,23 +445,22 @@ var createDiv=x=>{
 };
 var createUL=x=>{
 	return '<ul id="'+x.id+'" class="'+x.clazz+'"></ul>';
-	}
+};
 var createLI=x=>{
 	return '<li id="'+x.id+'" class="'+x.clazz+'"></li>';
-}
+};
+var createInput=x=>{
+	return $('<input id="'+x.id+'"class="'+x.clazz+'" type="'+x.type+'" value="'+x.val+'" placeholder="'+x.ph+'">');
+};
 var createInputText=x=>{
-	return $('<input type="text" id="'+x.id+'"class="'+x.clazz
-      +'"placeholder="example">');
-}
+	return $('<input type="text" id="'+x.id+'"class="'+x.clazz+'" placeholder="example">');
+};
 var createButton=x=>{
 	return '<button type ="button" id="'+x.id+'" class="btn '+x.clazz+'">'+x.val+'</button>';
-}
-
+};
 var createText=x=>{
 	return '<span id="'+x+'"></span>';
-}
-
-
+};
 var createTab=(x, y, json, type)=>{
 	var a = 1;
 	var tab = '<table id="'+x+'" class="table table-'+y+'">'

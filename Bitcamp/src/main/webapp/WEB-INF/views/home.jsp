@@ -12,6 +12,7 @@
 	<script src="${context}/resources/js/jquery.magnific-popup.js"></script>
 	<script src="${context}/resources/js/app.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 </head>
 <body style="background-color: #eceff1;">
 	<div id="wrapper">
