@@ -12,17 +12,18 @@ import com.bitcamp.web.domain.Member;
 public interface Mapper {
 	public void insertMember(Command cmd);
 	public void addImage(Image image);
-	public void updateMember(Command cmd);
+	public void updateMember(Member member);
 	public void deleteMember(Command cmd);
 	public List<Member> selectAll(Command cmd);
 	public List<Member> selectByName(Command cmd);
 	public List<Member> selectById(Command cmd);
 	public List<Board> articles(Command cmd);
 	public Member selectMemberById(Command cmd);
-	public Member searchMemberById(HashMap<?,?> map);
+	public HashMap<String, String> searchMemberById(HashMap<?,?> map);
 	public Member searchAdminById(HashMap<?,?> map);
 	public int selectCount(Command cmd);
 	public int exist(Command cmd);
 	public int existArticles(Command cmd);
 	public int existAdmin(Command cmd);
+	public HashMap<String, String> searchAll(HashMap<?,?> map);
 }

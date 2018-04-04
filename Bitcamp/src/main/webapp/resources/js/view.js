@@ -376,6 +376,12 @@ var navigation=()=>{
 	+'      </ul>'
 
 	+'      <ul class="nav navbar-nav navbar-right">'
+	+'        <li>'
+	+'      	<form id="form-search" class="navbar-form" role="search">'
+	+'      		<div id="div-search-form" class="form-group">'
+	+'      		</div>'
+	+'      	</form>'
+	+'        </li>'	
 	+'        <li class="dropdown mega-dropdown">'
 	+'            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"'
 	+'                aria-haspopup="true" aria-expanded="false">접속하기<span class="caret"></span>'
@@ -387,18 +393,7 @@ var navigation=()=>{
 	+'            </ul>'
 	+'        </li>'	
 	+'      </ul>'
-	
-	+'      <ul class="nav navbar-nav navbar-right">'
-	+'            <li id="li-search-option" class="navbar-left">'
-	+'            </li>'
-	+'      <form class="navar-form navbar-left form-inline" role="search">'
-	+'      	<div class="form-group">'
-	+'      		<input type="text" class="form-control" placeholder="Search...">'
-	+'      		<button type="submit" class="btn btn-default form-control">검색</button>'
-	+'      	</div>'
-	+'      </form>'
-	+'      </ul>'
-	
+
 	+'    </div>'
 	+'  </div>'
 	+'</nav>'
@@ -414,7 +409,7 @@ function createButtonNav1st() {
 };
 
 var createSelect=x=>{
-  return '<select id="'+x.id+'" name="'+x.name+'">"'+x.op+'"</select>'
+  return '<select id="'+x.id+'" class="'+x.clazz+'" name="'+x.name+'">"'+x.op+'"</select>'
 };
 
 var createOption=x=>{

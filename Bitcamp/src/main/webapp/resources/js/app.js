@@ -10,6 +10,27 @@ app = {init : x=>{
 		    	})
 }};
 
+app.cookie = {setCookie: x=>{
+		document.cookie = x.key + "=" + x.val
+	},
+	getCookie: x=>{
+		var name = x.key + "=";
+		var res = document.cookie.split(';');
+		for(var i=0; i<res.length; i++) {
+			var t = res[i];
+			while(t.charAt(0)=='') {
+				t = t.substring(1, t.length);
+				if(t.indexOf(name) == 0) {
+					return t.substring(name.length, t.length);
+				}
+			}
+		}
+	},
+	removeCookie: x=>{
+		createCookie(name, "", -1);
+	}
+};
+
 app.rgx = {isNumber : x=>{
 		return typeof x === 'number' && isFinite(x);
 	},
@@ -281,10 +302,33 @@ app.algorithm=(()=>{
 	    		app.main.onCreate()
 	    	);
 
-	    	$(createSelect({id:'select-id',name:'user', op: createOption({op:'member', sel:'selected', val:'회원'})}))
-	    	      .appendTo($('#li-search-option'))
+	    	$(createSelect({id:'select-id', clazz: 'form-control', name:'user', op: createOption({op:'member', sel:'selected', val:'회원'})}))
+	    	      .appendTo($('#div-search-form'))
 	    	$(createOption({op:'admin',sel:'',val:'관리자'})).appendTo('#select-id')
-	    	
+
+	    	$(createInput({id:'input-search', clazz:'form-control', type:'text', val:'', ph:'Search...'}))
+	    		.attr('style', 'width: 350px')
+	    		.appendTo('#div-search-form')
+	    	$(createButton({id:'', clazz:'btn btn-success form-control', val:'검색하기'}))
+	    		.attr('type', 'submit')
+	    		.appendTo('#form-search')
+	    		.on('click', ()=>{
+	    	    	var a = $('#select-id option:selected').val();
+	    	    	var json = {type : a, data : $('#input-search').val()}
+	    	    	$.ajax({
+						url : context+'/search/'+a,
+						method : 'POST',
+						data : JSON.stringify(json),
+						dataType : 'json',
+						contentType : 'application/json',
+						success : x=>{
+							alert('성공');
+						},
+						error : (x, h, m)=>{
+							alert('에러 발생 x='+x+', h='+h+', m='+m);
+						}
+					});
+	    		}); // button end
 	    	
 	    	$(createATag({id : 'a-home', link : '#', clazz : '', val : createSpan({id : '', clazz : 'glyphicon-home', val : 'HOME'})}))
 	    	.appendTo('#li-home')

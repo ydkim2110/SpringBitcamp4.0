@@ -46,22 +46,30 @@ public class Controller {
 	public Object searchOne(@PathVariable("keyword") String keyword, 
 			@RequestBody HashMap<String, String> param){
 		Object o = null;
-		switch (param.get("type")) {
+		logger.info("keyword : {}", keyword);
+		logger.info("input : {}", param.get("data"));
+		switch (keyword) {
 		case "member":
+			param.put("id", "id");
 			o = new ISearchService() {
 				@Override
 				public Object execute(HashMap<?, ?> param) {
 					return mapper.searchMemberById(param);
 				}
 			}.execute(param);
+			break;
 		case "admin":
+			param.put("id", "adminId");
+			logger.info("admin {}", "들어옴");
 			o = new ISearchService() {
 				@Override
 				public Object execute(HashMap<?, ?> param) {
 					return mapper.searchMemberById(param);
 				}
 			}.execute(param);
+			break;
 		}
+		logger.info("결과 {}", o);
 		return o;
 	}
 	
